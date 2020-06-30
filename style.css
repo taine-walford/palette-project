@@ -1,0 +1,103 @@
+.colour-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 25px;
+}
+.horizontal-sep {
+    height: 1px;
+    margin-top: 1px;
+}
+.full-width {
+    width: 100%;
+}
+.colour-detail {
+    font-family: 'Inconsolata', monospace;
+    font-size: 20px;
+}
+.no-pad {
+    padding: 0px; 
+}
+.no-margin {
+    margin: 0px; 
+}
+.spaced {
+    margin-top: 2px;
+}
+.colour-card{
+    position: relative;
+    height: 260px;
+    width: 200px;
+    margin: 20px;
+}
+.card-details{
+    width: 170px;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+}
+.card-container {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.left-side {
+    position: absolute;
+    float: left;
+    height: 260px;
+    width: 2px;
+}
+.right-side {
+    position: absolute;
+    left: 200px;
+    height: 260px;
+    width: 2px;
+}
+.hexagon-container {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: 30px;
+    width: 200px;
+}
+
+/* yoinked */
+.hexagon {
+    position: relative;
+    width: 140px; 
+    height: 80.83px;
+    margin: 40.41px 0;
+    box-shadow: 0 0 45px rgba(0,0,0,0.05);
+  }
+  
+  .hexagon:before,
+  .hexagon:after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    width: 98.99px;
+    height: 98.99px;
+    -webkit-transform: scaleY(0.5774) rotate(-45deg);
+    -ms-transform: scaleY(0.5774) rotate(-45deg);
+    transform: scaleY(0.5774) rotate(-45deg);
+    background-color: inherit;
+    left: 20.5025px;
+    box-shadow: 0 0 45px rgba(0,0,0,0.3);
+  }
+  
+  .hexagon:before {
+    top: -49.4975px;
+  }
+  
+  .hexagon:after {
+    bottom: -49.4975px;
+  }
+  
+  /*cover up extra shadows*/
+  .hexagon span {
+    display: block;
+    position: absolute;
+    top:0px;
+    left: 0;
+    width:140px;
+    height:80.8290px;
+    z-index: 2;
+    background: inherit;
+  }

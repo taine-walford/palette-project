@@ -1,0 +1,8 @@
+{
+    "manifest_version": 2,
+    "name": "palette",
+    "version": "skrtskrt",
+    "permissions": [
+      "storage"
+    ]
+}

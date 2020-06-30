@@ -2,8 +2,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+
     <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-firestore.js"></script> 
     <script src="./core.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
     <title>Palette Project</title>
 </head>
 <body>
@@ -11,8 +20,10 @@
         <form method="post">
             <input id="colourName" placeholder="Colour Name"/>
             <input id="hexCode" placeholder="Hex Code"/>
+            <input id="rgbString" placeholder="RGB Values"/>
             <input id="addButton" type="button" value="Add"/>
         </form>
+        <div id="paletteContainer" class="card-container"> Test </div>
     </div>
 </body>
 </html>
