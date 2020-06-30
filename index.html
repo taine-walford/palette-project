@@ -2,15 +2,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style.css">
-    <script src="/core.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./core.js"></script>
     <title>Palette Project</title>
 </head>
 <body>
-    <form method="post">
-        <input id="colourName" placeholder="Colour Name"/>
-        <input id="hexCode" placeholder="Hex Code"/>
-        <input type="button" value="Add" onclick="saveColour">
-    </form>
+    <div id="render">
+        <form method="post">
+            <input id="colourName" placeholder="Colour Name"/>
+            <input id="hexCode" placeholder="Hex Code"/>
+            <input id="addButton" type="button" value="Add"/>
+        </form>
+    </div>
 </body>
 </html>
