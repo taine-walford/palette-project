@@ -7,27 +7,30 @@ let currentPalette = [],
 
 function handleAddClick () {
     console.log("proc >>> palette addition")
-    if(document.getElementById("rgbString").value && document.getElementById("colourName").value) {
+    if(document.getElementById("colourName").value && (document.getElementById("rgbString").value || document.getElementById("hexCode").value)) {
         addColour()
     }
 }
 
 function loadPalette () {
-    db.collection("palette")
+    return db.collection("palette")
         .get()
         .then(snapshot => {
-            currentPalette = []
+            inputArray = []
             console.log("proc >>> query snapshot")
             snapshot.forEach(doc => {
                 console.log(`proc >>> snapshot child ${doc.id.toLowerCase()}`)
 
-                currentPalette.push(doc.data())
+                inputArray.push(doc.data())
             });
-            return renderColours()
+            console.log(`rend >>> replacing palettecontainer with masonry load`)
+            masonry.intialise(components.masonryColumn, paletteContainer, inputArray)
+            console.log(`rend >>> replacing palettecontainer with masonry load`)
+            return ''
         })
         .catch(err => {
-        console.error("erro >>> loading collection ", err);
-            })
+            console.error("erro >>> loading collection | ", err);
+        })
 }
 
 function addColour () {
@@ -37,7 +40,7 @@ function addColour () {
     let newColour = {
         colourName: currentName ? currentName : 'Null',
         hexCode: currentHex ? currentHex : rgbToHex(currentRGB),
-        rgbString: currentRGB ? currentRGB : '0-0-0'
+        rgbString: currentRGB ? currentRGB : hexToRGB(currentHex)
     }
     console.log("proc >>> adding colour to firebase")
     db.collection("palette")
@@ -56,40 +59,10 @@ function addColour () {
         })
 }
 
-function renderColours () {
-    let renderString = ''
-    currentPalette.forEach(colourObject => {
-        console.log(`proc >>> array child ${colourObject.colourName.toLowerCase()}`)
-        console.log(`proc >>> adding child html to render batch`)
-        renderString += colourHTMLTemplate(colourObject)
-    })
-    console.log(`rend >>> replacing palettecontainer with render batch`)
-    document.getElementById('paletteContainer').innerHTML = renderString
-    return renderString
-}
-
-function colourHTMLTemplate(colourObject) {
-    return `
-        <div class='colour-card'>
-            <div class='left-side no-pad no-margin' style='background-color: ${colourObject.hexCode}'></div>
-            <div class='right-side no-pad no-margin' style='background-color: ${colourObject.hexCode}'></div>
-            <div class='hexagon-container'>
-                <div class="hexagon" style='background-color: ${colourObject.hexCode}'><span></span></div>
-            </div>
-            <div class='card-details'>
-                <p class='colour-title no-pad no-margin spaced' style='color: ${colourObject.hexCode}'>
-                    ${colourObject.colourName}
-                </p>
-                <div class='horizontal-sep full-width' style='background-color: ${colourObject.hexCode}' ></div>
-                <p class='colour-detail no-pad no-margin spaced' style='color: ${colourObject.hexCode}'>
-                    ${colourObject.hexCode}
-                </p>
-                <p class='colour-detail no-pad no-margin spaced' style='color: ${colourObject.hexCode}'>
-                    ${colourObject.rgbString}
-                </p>
-            </div>
-        </div>
-    `
+function renderColours (renderString) {
+    // console.log(`rend >>> replacing palettecontainer with render batch`)
+    // paletteContainer.innerHTML = renderString
+    // return renderString
 }
 
 function rgbToHex(rgbString) {
@@ -103,6 +76,26 @@ function rgbToHex(rgbString) {
         hexString += currentHex
     })
     return '#' + hexString.toUpperCase()
+}
+
+function hexToRGB (hexString) {
+    let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexString);
+    let rgbObject = result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : '000-000-000';
+    let formattedObject = {
+        r: pad(rgbObject.r),
+        g: pad(rgbObject.g),
+        b: pad(rgbObject.b),
+    }
+    return `${formattedObject.r}-${formattedObject.g}-${formattedObject.b}`
+}
+
+function pad(number) {
+    var s = "000" + String(number);
+    return s.substr(s.length - 3);
 }
 
 window.onload = function() {
@@ -120,7 +113,6 @@ window.onload = function() {
     globalDocument.getElementById("addButton").onclick = handleAddClick
     paletteContainer = document.getElementById('paletteContainer')
     cssVariables.paletterContainerWidth = paletteContainer.clientWidth;
-    console.log(cssVariables)
     console.log("proc >>> loading collection from firebase")
     loadPalette()
 }
