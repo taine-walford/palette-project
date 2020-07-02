@@ -18,7 +18,6 @@ let masonry = {
         // update global dimension variables / return object of updates?
         //   >>> to-do
         // add column divs to parentElement
-        let renderString = ''
         for(let columnIndex= 0; columnIndex< column.number; columnIndex++) {
             column.data.push([])
             let spacingArr
@@ -38,10 +37,9 @@ let masonry = {
         stoneComponents = masonry.handleStones()
         // using component template, iterate through stoneArray and fill each template with data from the object
         // add the templates to the column divs
-        return renderString
+        return ''
     },
     handleStones : (updateArray) => { // handle init/update of the stoneArray
-        console.log(stoneArray)
         let columnIndex = 0
         let stoneElement
         if(updateArray) stoneArray = updateArray
@@ -49,10 +47,6 @@ let masonry = {
             column.data[columnIndex] = stoneArray[stoneIndex]
             stoneElement = components.colourCard(stoneIndex, stoneArray[stoneIndex])
             column.elements[columnIndex].appendChild(stoneElement)
-
-            console.log(column.number, columnIndex)            
-            console.log(columnIndex +', ' + stoneArray[stoneIndex])
-
             columnIndex == column.number - 1 ? columnIndex = 0 : columnIndex++
         }
         return ''
@@ -60,7 +54,12 @@ let masonry = {
     handleResize : () => {
 
     },
-    renderParent : () => { // replace the parentElements innerHTML with a string that contains x columns populated with components with input from ColumnData
-
+    renderParent : (updateArray) => { // replace the parentElements innerHTML with a string that contains x columns populated with components with input from ColumnData
+        stoneArray = updateArray
+        column = {number:0, width:0, elements : [], data: []}
+        let parent = document.getElementById('paletteContainer')
+        parent.innerHTML = ''
+        masonry.intialise(componentTemplate, parent, updateArray)
+        return ''
     }
 }

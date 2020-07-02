@@ -2,7 +2,7 @@ let globalDocument,
     globalBody,
     paletteContainer,
     db
-let currentPalette = [],
+let inputArray = [],
     cssVariables = {}
 
 function handleAddClick () {
@@ -26,7 +26,7 @@ function loadPalette () {
             console.log(`rend >>> replacing palettecontainer with masonry load`)
             masonry.intialise(components.masonryColumn, paletteContainer, inputArray)
             console.log(`rend >>> replacing palettecontainer with masonry load`)
-            return ''
+            return snapshot
         })
         .catch(err => {
             console.error("erro >>> loading collection | ", err);
@@ -42,27 +42,24 @@ function addColour () {
         hexCode: currentHex ? currentHex : rgbToHex(currentRGB),
         rgbString: currentRGB ? currentRGB : hexToRGB(currentHex)
     }
-    console.log("proc >>> adding colour to firebase")
-    db.collection("palette")
+    return db.collection("palette")
         .add(newColour)
         .then(doc => {
             console.log(`proc >>> added child ${doc.id.toLowerCase()}`)
-            currentPalette.push(newColour)
+            inputArray.push(newColour)
             renderColours()
             document.getElementById("colourName").value = ''
             document.getElementById("hexCode").value = ''
             document.getElementById("rgbString").value  = ''
-            return '' 
+            return ''
         })
         .catch(err => {
             console.error("erro >>> adding to collection ", err);
         })
 }
 
-function renderColours (renderString) {
-    // console.log(`rend >>> replacing palettecontainer with render batch`)
-    // paletteContainer.innerHTML = renderString
-    // return renderString
+function renderColours () {
+    masonry.renderParent(inputArray)
 }
 
 function rgbToHex(rgbString) {
